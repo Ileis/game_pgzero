@@ -4,10 +4,10 @@ from Entity import Entity
 from Player import Player
 from constants import *
 
-player = Player(*START_POS)
+player = Player(keyboard, clock, *START_POS)
 
 def update():
-    player.update(keyboard)
+    player.update()
 
 def draw():
     screen.clear()
