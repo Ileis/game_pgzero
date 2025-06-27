@@ -6,23 +6,21 @@ from constants import *
 class Player(Entity):
     _staff: Actor
     _direction: str
-    _projectiles: list[Projectile]
 
     _jump_strength: int
     _jumping: bool
 
     _projectile_speed: int
+    _clock: int
 
-    def __init__(self, keyboard, clock, x, y):
+    def __init__(self, x, y):
         super().__init__('player_f1_left', x, y)
         self._staff = Actor('staff', self.pos)
-        self._projectiles = []
+
+        self._clock = 0
 
         self._projectile_speed = 5
         self._damage = 5
-
-        self.keyboard = keyboard
-        self.clock = clock
         
         self._direction = LEFT
         self._frame_img = 1
@@ -30,8 +28,6 @@ class Player(Entity):
         self._vel_y = 0
         self._jump_strength = -10
         self._jumping = False
-
-        self._animate()
 
     def walk_left(self):
         self.x -= self._speed
@@ -59,49 +55,38 @@ class Player(Entity):
     def draw(self):
         super().draw()
         self._staff.draw()
-        self._draw_projectile()
 
-    def update(self):
-        self._fix_image_player_direction_action()
-        self._update_projectile()
+    def update(self, keyboard, dt):
+        self._animate(dt)
 
-        if self.keyboard.space or self._jumping:
+        if keyboard.space or self._jumping:
             self.jump()
 
-        if self.keyboard.d:
+        if keyboard.d:
             self.walk_right()
 
-        if self.keyboard.a:
+        if keyboard.a:
             self.walk_left()
 
     def angle_staff(self, pos):
         self._staff.angle = self._staff.angle_to(pos) - 90
 
-    def throw_projectile(self, pos):
-        self._projectiles.append(Projectile('projectile', self.x, self.y, 10, 5, pos))
-
-    def _draw_projectile(self):
-        for p in self._projectiles:
-            p.draw()
-
-    def _update_projectile(self):
-        for i in self._projectiles:
-            i.update()
-            if i.out_screen():
-                self._projectiles.remove(i)
+    def throw_projectile(self, pos) -> Projectile:
+        return Projectile('projectile', self.x, self.y, self._damage, self._projectile_speed, pos)
 
     def _norm_player(self):
         self.x = max(self.width / 2, min(WIDTH - self.width / 2, self.x))
-    
-    def _animate(self):
-        self._frame_img = 1 if self._frame_img == 2 else 2
-        self.clock.schedule_unique(self._animate, FRAME_RATE)
 
-    def _fix_staff_pos(self):
-        self._staff.pos = self.pos
+    def _animate(self, dt):
+        self._fix_image_player_direction_action()
+        self._clock += dt
+        if self._clock >= FRAME_RATE:
+            self._clock = 0
+            self._frame_img = 1 if self._frame_img == 2 else 2
+            self._fix_image_player_direction_action()
 
     def _fix_image_player_direction_action(self):
-        self._fix_staff_pos()
+        self._staff.pos = self.pos
 
         if self._jumping:
             self.image = f'player_jumping_{self._direction}'

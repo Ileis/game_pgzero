@@ -1,22 +1,19 @@
 from pygame import Rect
-import pgzero
 from Entity import Entity
 from Player import Player
+from GameManager import GameManger
 from constants import *
 
-player = Player(keyboard, clock, *START_POS)
+game = GameManger()
 
-def update():
-    player.update()
+def update(dt):
+    game.update(keyboard, dt)
 
 def draw():
-    screen.clear()
-    player.draw()
-    screen.draw.line(START_FLOOR, END_FLOOR, WHITE)
+    game.draw(screen)
 
 def on_mouse_move(pos):
-    player.angle_staff(pos)
+    game.on_mouse_move(pos)
 
 def on_mouse_down(pos, button):
-    if button == mouse.LEFT:
-        player.throw_projectile(pos)
+    game.on_mouse_down(pos, button, mouse)

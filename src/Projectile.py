@@ -15,6 +15,6 @@ class Projectile(Entity):
         self.x += self._vec[0] * self._speed
         self.y += self._vec[1] * self._speed
 
-    def out_screen(self):
+    def out_of_screen(self):
         return self.y < 0 or self.y > HEIGHT or self.x < 0 or self.x > WIDTH
     

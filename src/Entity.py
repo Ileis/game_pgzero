@@ -14,6 +14,12 @@ class Entity(Actor):
         self._damage = 10
         self._focus = focus
 
-    def angle_to():
+    def angle_to(self):
         if self._focus is not None:
-            super().angle_to(focus)
+            super().angle_to(self._focus)
+
+    def draw(self):
+        super().draw()
+
+    def update(self):
+        raise NotImplementedError("update method not implemented")
