@@ -21,7 +21,7 @@ class GameManger(Manager):
         self.player = Player(*START_POS)
 
         self.scene_manager = SceneManager()
-        self.enemy_manager = EnemyManager()
+        self.enemy_manager = EnemyManager(self.player)
         self.projectile_manager = ProjectileManager()
 
     def draw(self, screen):

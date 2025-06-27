@@ -3,9 +3,7 @@ from constants import *
 
 class Projectile(Entity):
     def __init__(self, img, x, y, damage, speed, focus = None):
-        super().__init__(img, x, y, focus)
-        self._damage = damage
-        self._speed = speed
+        super().__init__(img, x, y, damage, speed)
 
         self._vec = focus[0] - self.x, focus[1] - self.y
         distance = (self._vec[0] ** 2 + self._vec[1] ** 2) ** 0.5

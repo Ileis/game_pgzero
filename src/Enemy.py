@@ -1,4 +1,29 @@
+from math import degrees, atan2
 from Entity import Entity
+from constants import *
 
 class Enemy(Entity):
-    pass
+    def __init__(self, x, y, img, damage, speed, threshold):
+        super().__init__(img, x, y, damage, speed)
+        self._threshold = threshold
+
+    def draw(self):
+        super().draw()
+
+    def update(self, pos):
+        self.angle = self._angle_to_pos(pos)
+        self._walk_to_player(pos)
+
+    def _walk_to_player(self, pos):
+        dx = pos[0] - self.x
+        dy = (HEIGHT - self._threshold) - self.y
+        dist = (dx ** 2 + dy ** 2) ** 0.5
+
+        if dist > 0:
+            mov_dist = min(self._speed, dist)
+            self.x += (dx / dist) * mov_dist
+            self.y += (dy / dist) * mov_dist
+
+    def _angle_to_pos(self, pos) -> float:
+        dx, dy = pos[0] - self.x, pos[1] - self.y
+        return degrees(atan2(-dy, dx)) + 90

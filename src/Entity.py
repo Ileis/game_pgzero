@@ -5,18 +5,12 @@ class Entity(Actor):
 
     _speed: int
     _damage: int
-    _focus: tuple[int, int]
 
-    def __init__(self, img, x, y, focus = None):
+    def __init__(self, img, x, y, damage, speed):
         super().__init__(img)
         self.pos = x, y
-        self._speed = 2
-        self._damage = 10
-        self._focus = focus
-
-    def angle_to(self):
-        if self._focus is not None:
-            super().angle_to(self._focus)
+        self._damage = damage
+        self._speed = speed
 
     def draw(self):
         super().draw()

@@ -14,7 +14,7 @@ class Player(Entity):
     _clock: int
 
     def __init__(self, x, y):
-        super().__init__('player_f1_left', x, y)
+        super().__init__('player_f1_left', x, y, 10, 2)
         self._staff = Actor('staff', self.pos)
 
         self._clock = 0
