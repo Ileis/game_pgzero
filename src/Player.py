@@ -6,14 +6,16 @@ class Player(Entity):
     _staff: Actor
     _jump_strength: int
     _jumping: bool
+    _direction: str
 
     def __init__(self, keyboard, clock, x, y):
-        super().__init__('player_f1', x, y)
+        super().__init__('player_f1_left', x, y)
         self._staff = Actor('staff', self.pos)
 
         self.keyboard = keyboard
         self.clock = clock
         
+        self._direction = LEFT
         self._frame_img = 1
 
         self._vel_y = 0
@@ -26,17 +28,21 @@ class Player(Entity):
         self.x -= self._speed
         self._staff.pos = self.pos
         self._norm_player()
+        self._direction = LEFT
+        self._fix_direction()
 
     def walk_right(self):
         self.x += self._speed
         self._staff.pos = self.pos
         self._norm_player()
+        self._direction = RIGHT
+        self._fix_direction()
 
     def jump(self):
         if not self._jumping:
             self._jumping = True
             self._vel_y = self._jump_strength
-            self.image = 'player_jumping'
+            self.image = f'player_jumping_{self._direction}'
         else:
             self._vel_y += GRAVITY
             self.y += self._vel_y
@@ -71,6 +77,12 @@ class Player(Entity):
     def _animate(self):
         if not self._jumping:
             self._frame_img = 1 if self._frame_img == 2 else 2
-            self.image = f'player_f{self._frame_img}'
+            self._fix_direction()
             self._staff.pos = self.pos
             self.clock.schedule_unique(self._animate, FRAME_RATE)
+
+    def _fix_direction(self):
+        if self._jumping:
+            self.image = f'player_jumping_{self._direction}'
+        else:
+            self.image = f'player_f{self._frame_img}_{self._direction}'

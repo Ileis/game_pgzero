@@ -16,3 +16,6 @@ END_FLOOR = (WIDTH, FLOOR)
 GRAVITY = 0.7
 
 FRAME_RATE = 0.5
+
+LEFT = 'left'
+RIGHT = 'right'
