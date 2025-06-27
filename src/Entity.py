@@ -3,9 +3,9 @@ from pgzero.actor import Actor
 
 class Entity(Actor):
 
-    # _speed
-    # _damage
-    # _focus
+    _speed: int
+    _damage: int
+    _focus: tuple[int, int]
 
     def __init__(self, img, x, y, focus = None):
         super().__init__(img)
@@ -16,4 +16,4 @@ class Entity(Actor):
 
     def angle_to():
         if self._focus is not None:
-            super().angle_to(focus.pos)
+            super().angle_to(focus)
