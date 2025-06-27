@@ -16,3 +16,7 @@ def draw():
 
 def on_mouse_move(pos):
     player.angle_staff(pos)
+
+def on_mouse_down(pos, button):
+    if button == mouse.LEFT:
+        player.throw_projectile(pos)
