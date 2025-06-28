@@ -1,18 +1,23 @@
 from math import degrees, atan2
-from Entity import Entity
+from Chacacter import Character
+from Projectile import Projectile
 from constants import *
 
-class Enemy(Entity):
-    def __init__(self, x, y, img, damage, speed, threshold):
-        super().__init__(img, x, y, damage, speed)
+class Enemy(Character):
+    def __init__(self, x, y, img, damage, speed, hp, speed_attack, projectile_speed, threshold):
+        super().__init__(img, x, y, damage, speed, hp, speed_attack, projectile_speed)
         self._threshold = threshold
 
     def draw(self):
         super().draw()
 
-    def update(self, pos):
+    def update(self, dt, pos):
+        super().update(dt)
         self.angle = self._angle_to_pos(pos)
         self._walk_to_player(pos)
+
+    def throw_projectile(self, pos) -> Projectile | None:
+        return super().throw_projectile(pos, 'projectile_enemy')
 
     def _walk_to_player(self, pos):
         dx = pos[0] - self.x

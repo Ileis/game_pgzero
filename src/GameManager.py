@@ -16,13 +16,14 @@ class GameManger(Manager):
     scene_manager: SceneManager
     enemy_manager: EnemyManager
     projectile_manager: ProjectileManager
+    game_round: int
 
     def __init__(self):
-        self.player = Player(*START_POS)
-
+        self.player = Player(*START_POS, *player_stats)
         self.scene_manager = SceneManager()
         self.enemy_manager = EnemyManager(self.player)
         self.projectile_manager = ProjectileManager()
+        game_round = 1
 
     def draw(self, screen):
         self.scene_manager.draw(screen)
@@ -32,7 +33,7 @@ class GameManger(Manager):
 
     def update(self, keyboard, dt):
         self.player.update(keyboard, dt)
-        self.enemy_manager.update()
+        self.enemy_manager.update(dt)
         self.projectile_manager.update()
 
     def on_mouse_move(self, pos):
@@ -41,3 +42,5 @@ class GameManger(Manager):
     def on_mouse_down(self, pos, button, mouse):
         if button == mouse.LEFT:
             self.projectile_manager.new_projectile(self.player.throw_projectile(pos))
+
+player_stats: tuple[int, int, float, int] = (3, 2, 10, 0.5, 5)

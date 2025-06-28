@@ -8,7 +8,8 @@ class ProjectileManager(Manager):
         self.projectiles = []
 
     def new_projectile(self, projectile):
-        self.projectiles.append(projectile)
+        if projectile is not None:
+            self.projectiles.append(projectile)
 
     def draw(self):
         for projectile in self.projectiles:

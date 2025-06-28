@@ -1,26 +1,18 @@
 from pgzero.actor import Actor
-from Entity import Entity
+from Chacacter import Character
 from Projectile import Projectile
 from constants import *
 
-class Player(Entity):
+class Player(Character):
     _staff: Actor
     _direction: str
-
     _jump_strength: int
     _jumping: bool
+    _hp: int
 
-    _projectile_speed: int
-    _clock: int
-
-    def __init__(self, x, y):
-        super().__init__('player_f1_left', x, y, 10, 2)
+    def __init__(self, x, y, damage, speed, hp, speed_attack, projectile_speed):
+        super().__init__('player_f1_left', x, y, damage, speed, hp, speed_attack, projectile_speed)
         self._staff = Actor('staff', self.pos)
-
-        self._clock = 0
-
-        self._projectile_speed = 5
-        self._damage = 5
         
         self._direction = LEFT
         self._frame_img = 1
@@ -57,6 +49,7 @@ class Player(Entity):
         self._staff.draw()
 
     def update(self, keyboard, dt):
+        super().update(dt)
         self._animate(dt)
 
         if keyboard.space or self._jumping:
@@ -68,22 +61,20 @@ class Player(Entity):
         if keyboard.a:
             self.walk_left()
 
+    def throw_projectile(self, pos) -> Projectile | None:
+        return super().throw_projectile(pos, 'projectile_player')
+
     def angle_staff(self, pos):
         self._staff.angle = self._staff.angle_to(pos) - 90
-
-    def throw_projectile(self, pos) -> Projectile:
-        return Projectile('projectile', self.x, self.y, self._damage, self._projectile_speed, pos)
 
     def _norm_player(self):
         self.x = max(self.width / 2, min(WIDTH - self.width / 2, self.x))
 
     def _animate(self, dt):
-        self._fix_image_player_direction_action()
-        self._clock += dt
-        if self._clock >= FRAME_RATE:
-            self._clock = 0
+        if self.change_frame():
             self._frame_img = 1 if self._frame_img == 2 else 2
-            self._fix_image_player_direction_action()
+
+        self._fix_image_player_direction_action()
 
     def _fix_image_player_direction_action(self):
         self._staff.pos = self.pos

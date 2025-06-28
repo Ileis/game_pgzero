@@ -12,6 +12,10 @@ class Entity(Actor):
         self._damage = damage
         self._speed = speed
 
+    @property
+    def damage(self):
+        return self._damage
+
     def draw(self):
         super().draw()
 
