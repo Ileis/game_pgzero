@@ -67,7 +67,7 @@ class GameManager(Manager):
     def generate_wave(self):
         self._game_round += 1
         self.enemy_manager.generate_enemies(self._wave_size)
-        self._wave_size += 3
+        self._wave_size += random.randint(1, 8)
 
     def _clock_round_screen(self, dt):
         if self._clock_round == 0:
