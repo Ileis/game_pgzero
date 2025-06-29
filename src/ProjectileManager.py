@@ -1,6 +1,6 @@
 from Manager import Manager
 from Projectile import Projectile
-from Chacacter import Character
+from Character import Character
 
 class ProjectileManager(Manager):
     projectiles: list[Projectile]
@@ -16,7 +16,7 @@ class ProjectileManager(Manager):
         for projectile in self.projectiles:
             for character in characters:
                 if projectile.colliderect(character):
-                    character.take_damage(projectile.damage)
+                    character.lifebar.take_damage(projectile.damage)
                     self.projectiles.remove(projectile)
                     break
 

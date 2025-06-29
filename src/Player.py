@@ -1,5 +1,5 @@
 from pgzero.actor import Actor
-from Chacacter import Character
+from Character import Character
 from Projectile import Projectile
 from constants import *
 
@@ -43,8 +43,8 @@ class Player(Character):
                 self._vel_y = 0
                 self._jumping = False
 
-    def draw(self):
-        super().draw()
+    def draw(self, screen):
+        super().draw(screen)
         self._staff.draw()
 
     def update(self, keyboard, dt):

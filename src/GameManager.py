@@ -27,8 +27,8 @@ class GameManger(Manager):
 
     def draw(self, screen):
         self.scene_manager.draw(screen)
-        self.player.draw()
-        self.enemy_manager.draw()
+        self.player.draw(screen)
+        self.enemy_manager.draw(screen)
         self.projectile_manager.draw()
 
     def update(self, keyboard, dt):

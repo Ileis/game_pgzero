@@ -1,5 +1,7 @@
 SCALE = 1.5
 
+LIFEBAR = (20, 6)
+
 WHITE = (255, 255, 255)
 
 PLAYER_HIGHT = 40

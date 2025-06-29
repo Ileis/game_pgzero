@@ -23,17 +23,17 @@ class EnemyManager(Manager):
     def enemies(self):
         return self._enemies[:]
 
-    def draw(self):
+    def draw(self, screen):
         self.projectile_manager.draw()
 
         for enemy in self._enemies:
-            enemy.draw()
+            enemy.draw(screen)
 
     def update(self, dt):
         self.projectile_manager.update([self.player])
 
         for enemy in self._enemies:
-            if not enemy.is_alive():
+            if not enemy.lifebar.is_alive():
                 self._enemies.remove(enemy)
             else:
                 enemy.update(dt, self.player.pos)
@@ -47,5 +47,5 @@ class EnemyManager(Manager):
         for i in range(qtd):
             self._enemies.append(Enemy())
 
-    def generate_random_enemie(self):
-        return Enemy()
+    # def generate_random_enemie(self):
+        # return Enemy()

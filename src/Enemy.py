@@ -1,5 +1,5 @@
 from math import degrees, atan2
-from Chacacter import Character
+from Character import Character
 from Projectile import Projectile
 from constants import *
 
@@ -8,8 +8,8 @@ class Enemy(Character):
         super().__init__(img, x, y, damage, speed, hp, speed_attack, projectile_speed)
         self._threshold = threshold
 
-    def draw(self):
-        super().draw()
+    def draw(self, screen):
+        super().draw(screen)
 
     def update(self, dt, pos):
         super().update(dt)

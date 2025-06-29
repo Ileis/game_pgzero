@@ -1,18 +1,19 @@
 from Entity import Entity
 from Projectile import Projectile
+from Lifebar import Lifebar
 from constants import *
 
 class Character(Entity):
-    _hp: int
     _attack_speed: int
     _projectile_speed: int
     _clock_animate: int
     _clock_attack: int
     _frame_img: int
+    lifebar: Lifebar
 
     def __init__(self, img, x, y, damage, speed, hp, speed_attack, projectile_speed):
         super().__init__(img, x, y, damage, speed)
-        self._hp = hp
+        self.lifebar = Lifebar(self.left, self.top + 5, hp)
         self._speed_attack = speed_attack
         self._projectile_speed = projectile_speed
 
@@ -20,23 +21,14 @@ class Character(Entity):
         self._clock_attack = 0
         self._frame_img = 1
 
-    @property
-    def hp(self):
-        return self._hp
-    
-    @hp.setter
-    def hp(self, number):
-        self._hp = max(0, number)
-
-    def is_alive(self) -> bool:
-        return self._hp > 0
-
-    def take_damage(self, damage):
-        self.hp -= damage
-
     def update(self, dt):
         self._cooldown_attack(dt)
         self._timer_animate(dt)
+        self.lifebar.update((self.center[0] - LIFEBAR[0] / 2, 5 + (self.y + self.height / 2)))
+
+    def draw(self, screen):
+        super().draw()
+        self.lifebar.draw(screen)
 
     def attack_avaliable(self) -> bool:
         return self._clock_attack == 0
