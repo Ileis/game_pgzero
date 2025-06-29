@@ -9,6 +9,8 @@ class Character(Entity):
     _clock_animate: int
     _clock_attack: int
     _frame_img: int
+    _collision_radius = 30
+    _push_force = 0.5
     lifebar: Lifebar
 
     def __init__(self, img, x, y, damage, speed, hp, speed_attack, projectile_speed):

@@ -43,4 +43,4 @@ class GameManger(Manager):
         if button == mouse.LEFT:
             self.projectile_manager.new_projectile(self.player.throw_projectile(pos))
 
-player_stats: tuple[int, int, float, int] = (3, 2, 10, 0.5, 5)
+player_stats: tuple[int, int, float, int] = (3, 2, 20, 0.5, 5)

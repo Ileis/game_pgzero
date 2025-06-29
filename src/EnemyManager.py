@@ -16,8 +16,7 @@ class EnemyManager(Manager):
         self.projectile_manager = ProjectileManager()
         self._enemies = []
 
-        self.generate_enemy_01()
-        self.generate_enemy_01()
+        self.generate_enemies(10)
 
     @property
     def enemies(self):
@@ -36,7 +35,7 @@ class EnemyManager(Manager):
             if not enemy.lifebar.is_alive():
                 self._enemies.remove(enemy)
             else:
-                enemy.update(dt, self.player.pos)
+                enemy.update(dt, self.player.pos, self._enemies)
                 self.projectile_manager.new_projectile(enemy.throw_projectile(self.player.pos))
 
     def generate_enemy_01(self):
@@ -45,7 +44,4 @@ class EnemyManager(Manager):
 
     def generate_enemies(self, qtd: int):
         for i in range(qtd):
-            self._enemies.append(Enemy())
-
-    # def generate_random_enemie(self):
-        # return Enemy()
+            self.generate_enemy_01()
