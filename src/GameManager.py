@@ -11,7 +11,7 @@ from Player import Player
 from Enemy import Enemy
 from Projectile import Projectile
 
-class GameManger(Manager):
+class GameManager(Manager):
     player: Player
     scene_manager: SceneManager
     enemy_manager: EnemyManager

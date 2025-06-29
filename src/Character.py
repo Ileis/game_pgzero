@@ -3,6 +3,7 @@ from Clock import Clock
 from Projectile import Projectile
 from Lifebar import Lifebar
 from constants import *
+import globals
 
 class Character(Entity):
     _projectile_speed: int
@@ -36,7 +37,9 @@ class Character(Entity):
     def throw_projectile(self, pos, img_projectile, sound) -> Projectile | None:
         if self._attack.is_clock_ended():
             self._attack.init_clock()
-            sound.play()
+            if globals.sound_on:
+                sound.play()
+
             return Projectile(img_projectile, self.x, self.y, self._damage, self._projectile_speed, pos)
         return None
 

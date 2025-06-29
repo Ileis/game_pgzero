@@ -1,6 +1,7 @@
 from Manager import Manager
 from Projectile import Projectile
 from Character import Character
+import globals
 
 class ProjectileManager(Manager):
     projectiles: list[Projectile]
@@ -16,7 +17,10 @@ class ProjectileManager(Manager):
         for projectile in self.projectiles:
             for character in characters:
                 if projectile.colliderect(character):
-                    sounds.character_takes_damage.play()
+
+                    if globals.sound_on:
+                        sounds.character_takes_damage.play()
+
                     character.lifebar.take_damage(projectile.damage)
                     self.projectiles.remove(projectile)
                     break
@@ -32,5 +36,7 @@ class ProjectileManager(Manager):
             projectile.update()
             if projectile.out_of_screen():
                 if projectile.hit_the_ground():
-                    sounds.projectile_hit_the_ground.play()
+                    if globals.sound_on:
+                        sounds.projectile_hit_the_ground.play()
+
                 self.projectiles.remove(projectile)

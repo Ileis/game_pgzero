@@ -50,6 +50,9 @@ class Player(Character):
     def update(self, keyboard, dt):
         super().update(dt)
 
+        if not self.lifebar.is_alive():
+            exit()
+
         if keyboard.space or self._jumping:
             self.jump()
 

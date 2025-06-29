@@ -23,3 +23,5 @@ ROUND_SCREEN_TIME = 2
 
 LEFT = 'left'
 RIGHT = 'right'
+
+BOX_SIZE_MENU = WIDTH / 2, HEIGHT / 8
