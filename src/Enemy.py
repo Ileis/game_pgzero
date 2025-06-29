@@ -13,11 +13,21 @@ class Enemy(Character):
 
     def update(self, dt, pos):
         super().update(dt)
+        self._animate()
         self.angle = self._angle_to_pos(pos)
         self._walk_to_player(pos)
 
     def throw_projectile(self, pos) -> Projectile | None:
         return super().throw_projectile(pos, 'projectile_enemy')
+
+    def _animate(self):
+        if self.change_frame():
+            self._frame_img = 1 if self._frame_img == 2 else 2
+
+        self._fix_image()
+
+    def _fix_image(self):
+        self.image = f'enemy_01_f{self._frame_img}'
 
     def _walk_to_player(self, pos):
         dx = pos[0] - self.x

@@ -15,7 +15,6 @@ class Player(Character):
         self._staff = Actor('staff', self.pos)
         
         self._direction = LEFT
-        self._frame_img = 1
 
         self._vel_y = 0
         self._jump_strength = -10
@@ -50,7 +49,7 @@ class Player(Character):
 
     def update(self, keyboard, dt):
         super().update(dt)
-        self._animate(dt)
+        self._animate()
 
         if keyboard.space or self._jumping:
             self.jump()
@@ -70,7 +69,7 @@ class Player(Character):
     def _norm_player(self):
         self.x = max(self.width / 2, min(WIDTH - self.width / 2, self.x))
 
-    def _animate(self, dt):
+    def _animate(self):
         if self.change_frame():
             self._frame_img = 1 if self._frame_img == 2 else 2
 

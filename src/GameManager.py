@@ -34,7 +34,7 @@ class GameManger(Manager):
     def update(self, keyboard, dt):
         self.player.update(keyboard, dt)
         self.enemy_manager.update(dt)
-        self.projectile_manager.update()
+        self.projectile_manager.update(self.enemy_manager.enemies)
 
     def on_mouse_move(self, pos):
         self.player.angle_staff(pos)
