@@ -9,7 +9,7 @@ class Enemy(Character):
     def __init__(self, x, y, img, damage, speed, hp, speed_attack, projectile_speed, threshold):
         super().__init__(img, x, y, damage, speed, hp, speed_attack, projectile_speed)
         self._threshold = threshold
-        self._clock_attack = random.random()
+        self._attack.clock = random.random() % speed_attack
 
     def draw(self, screen):
         super().draw(screen)
@@ -21,8 +21,8 @@ class Enemy(Character):
         self._walk_to_player(pos, characters)
         self._avoid_overlap(characters)
 
-    def throw_projectile(self, pos) -> Projectile | None:
-        return super().throw_projectile(pos, 'projectile_enemy')
+    def throw_projectile(self, pos, sounds) -> Projectile | None:
+        return super().throw_projectile(pos, 'projectile_enemy', sounds.enemy_sound_shoot)
 
     def _animate(self):
         if self._animation.is_clock_ended():

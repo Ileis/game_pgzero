@@ -15,5 +15,3 @@ class SceneManager(Manager):
 
     def round_screen(self, round, screen):
         screen.draw.text(f'Round {round}', (WIDTH / 2, HEIGHT / 2))
-
-    

@@ -59,8 +59,8 @@ class Player(Character):
         if keyboard.a:
             self.walk_left()
 
-    def throw_projectile(self, pos) -> Projectile | None:
-        return super().throw_projectile(pos, 'projectile_player')
+    def throw_projectile(self, pos, sounds) -> Projectile | None:
+        return super().throw_projectile(pos, 'projectile_player', sounds.player_sound_shoot)
 
     def angle_staff(self, pos):
         self._staff.angle = self._staff.angle_to(pos) - 90

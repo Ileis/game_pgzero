@@ -33,9 +33,10 @@ class Character(Entity):
         super().draw()
         self.lifebar.draw(screen)
 
-    def throw_projectile(self, pos, img_projectile) -> Projectile | None:
+    def throw_projectile(self, pos, img_projectile, sound) -> Projectile | None:
         if self._attack.is_clock_ended():
             self._attack.init_clock()
+            sound.play()
             return Projectile(img_projectile, self.x, self.y, self._damage, self._projectile_speed, pos)
         return None
 

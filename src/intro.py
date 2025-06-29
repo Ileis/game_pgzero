@@ -11,7 +11,7 @@ game = GameManger()
 # sons
 
 def update(dt):
-    game.update(keyboard, dt)
+    game.update(keyboard, dt, sounds)
 
 def draw():
     game.draw(screen, clock)
@@ -20,4 +20,4 @@ def on_mouse_move(pos):
     game.on_mouse_move(pos)
 
 def on_mouse_down(pos, button):
-    game.on_mouse_down(pos, button, mouse)
+    game.on_mouse_down(pos, button, mouse, sounds)

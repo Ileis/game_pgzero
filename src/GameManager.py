@@ -61,17 +61,17 @@ class GameManger(Manager):
     def _init_clock_round_screen(self):
         self._clock_round = ROUND_SCREEN_TIME
 
-    def update(self, keyboard, dt):
+    def update(self, keyboard, dt, sounds):
         self.player.update(keyboard, dt)
-        self.enemy_manager.update(dt)
-        self.projectile_manager.update(self.enemy_manager.enemies)
+        self.enemy_manager.update(sounds, dt)
+        self.projectile_manager.update(self.enemy_manager.enemies, sounds)
         self._clock_round_screen(dt)
 
     def on_mouse_move(self, pos):
         self.player.angle_staff(pos)
 
-    def on_mouse_down(self, pos, button, mouse):
+    def on_mouse_down(self, pos, button, mouse, sounds):
         if button == mouse.LEFT:
-            self.projectile_manager.new_projectile(self.player.throw_projectile(pos))
+            self.projectile_manager.new_projectile(self.player.throw_projectile(pos, sounds))
 
 player_stats: tuple[int, int, float, int] = (3, 2, 20, 0.5, 5)

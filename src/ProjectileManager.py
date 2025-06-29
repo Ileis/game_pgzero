@@ -12,10 +12,11 @@ class ProjectileManager(Manager):
         if projectile is not None:
             self.projectiles.append(projectile)
 
-    def _collision(self, characters: list[Character]):
+    def _collision(self, characters: list[Character], sounds):
         for projectile in self.projectiles:
             for character in characters:
                 if projectile.colliderect(character):
+                    sounds.character_takes_damage.play()
                     character.lifebar.take_damage(projectile.damage)
                     self.projectiles.remove(projectile)
                     break
@@ -24,10 +25,12 @@ class ProjectileManager(Manager):
         for projectile in self.projectiles:
             projectile.draw()
 
-    def update(self, character):
-        self._collision(character)
+    def update(self, character, sounds):
+        self._collision(character, sounds)
 
         for projectile in self.projectiles:
             projectile.update()
             if projectile.out_of_screen():
+                if projectile.hit_the_ground():
+                    sounds.projectile_hit_the_ground.play()
                 self.projectiles.remove(projectile)
