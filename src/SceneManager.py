@@ -13,5 +13,5 @@ class SceneManager(Manager):
     def update(self, dt):
         pass
 
-    def round_screen(self, round, screen):
-        screen.draw.text(f'Round {round}', (WIDTH / 2, HEIGHT / 2))
+    def round_screen(self, round, screen, upgrades):
+        screen.draw.text(f'Round {round}\n{upgrades}', (WIDTH / 2, HEIGHT / 2))

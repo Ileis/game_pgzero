@@ -1,4 +1,5 @@
 import pgzero
+import random
 
 from constants import *
 
@@ -11,6 +12,8 @@ from Player import Player
 from Enemy import Enemy
 from Projectile import Projectile
 
+import upgrades
+
 class GameManager(Manager):
     player: Player
     scene_manager: SceneManager
@@ -19,6 +22,7 @@ class GameManager(Manager):
     _wave_size: int
     _game_round: int
     _clock_round: float
+    _round_upgrade: str
 
     def __init__(self):
         self.player = Player(*START_POS, *player_stats)
@@ -28,17 +32,35 @@ class GameManager(Manager):
         self._game_round = 0
         self._wave_size = 5
         self._clock_round = 0
+        self._round_upgrade = ''
+
+    def player_upgrade(self):
+        upgrade = upgrades.up[random.randint(0, len(upgrades.up) - 1)]
+        damage = upgrade[0]
+        speed = upgrade[1]
+        attack_speed = upgrade[2]
+
+        self._round_upgrade = f'damage: +{damage}, speed: +{speed}, attack speed: +{attack_speed}'
+
+        self.player._damage += damage
+        self.player._speed += speed
+        self.player._attack._timer -= attack_speed
+
 
     def draw(self, screen, clock):
+        screen.clear()
         self.scene_manager.draw(screen, self._game_round)
         self.player.draw(screen)
         self.enemy_manager.draw(screen)
         self.projectile_manager.draw()
 
         if self._round_screen_on():
-            self.scene_manager.round_screen(self._game_round, screen)
+            self.scene_manager.round_screen(self._game_round, screen, self._round_upgrade)
 
         if not self.enemy_manager.is_round_active():
+            # if self._clock_round > 1:
+            self.player_upgrade()
+
             self._init_clock_round_screen()
             self.generate_wave()
 
