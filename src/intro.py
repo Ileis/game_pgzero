@@ -10,7 +10,7 @@ def update(dt):
     game.update(keyboard, dt)
 
 def draw():
-    game.draw(screen)
+    game.draw(screen, clock)
 
 def on_mouse_move(pos):
     game.on_mouse_move(pos)

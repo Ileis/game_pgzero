@@ -16,7 +16,8 @@ class EnemyManager(Manager):
         self.projectile_manager = ProjectileManager()
         self._enemies = []
 
-        self.generate_enemies(10)
+    def is_round_active(self) -> bool:
+        return len(self._enemies) > 0
 
     @property
     def enemies(self):
