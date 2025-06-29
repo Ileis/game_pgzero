@@ -49,7 +49,6 @@ class Player(Character):
 
     def update(self, keyboard, dt):
         super().update(dt)
-        self._animate()
 
         if keyboard.space or self._jumping:
             self.jump()
@@ -70,7 +69,8 @@ class Player(Character):
         self.x = max(self.width / 2, min(WIDTH - self.width / 2, self.x))
 
     def _animate(self):
-        if self.change_frame():
+        if self._animation.is_clock_ended():
+            self._animation.init_clock()
             self._frame_img = 1 if self._frame_img == 2 else 2
 
         self._fix_image_player_direction_action()

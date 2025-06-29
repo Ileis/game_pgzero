@@ -6,6 +6,10 @@ from constants import *
 
 game = GameManger()
 
+# morte do personagem
+# tela de inicio
+# sons
+
 def update(dt):
     game.update(keyboard, dt)
 

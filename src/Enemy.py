@@ -16,7 +16,7 @@ class Enemy(Character):
 
     def update(self, dt, pos, characters):
         super().update(dt)
-        self._animate()
+
         self.angle = self._angle_to_pos(pos)
         self._walk_to_player(pos, characters)
         self._avoid_overlap(characters)
@@ -25,7 +25,8 @@ class Enemy(Character):
         return super().throw_projectile(pos, 'projectile_enemy')
 
     def _animate(self):
-        if self.change_frame():
+        if self._animation.is_clock_ended():
+            self._animation.init_clock()
             self._frame_img = 1 if self._frame_img == 2 else 2
 
         self._fix_image()
