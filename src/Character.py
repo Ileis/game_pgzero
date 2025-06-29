@@ -13,7 +13,7 @@ class Character(Entity):
 
     def __init__(self, img, x, y, damage, speed, hp, speed_attack, projectile_speed):
         super().__init__(img, x, y, damage, speed)
-        self.lifebar = Lifebar(self.left, self.top + 5, hp)
+        self.lifebar = Lifebar(self.center[0] - LIFEBAR[0] / 2, 5 + (self.y + self.height / 2), hp)
         self._speed_attack = speed_attack
         self._projectile_speed = projectile_speed
 
